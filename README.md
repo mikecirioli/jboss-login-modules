@@ -15,16 +15,18 @@ Included modules:
 
     JbossRadiusLoginModule - performs RADIUS OTP based authentication
     
-    StaticLoginModule      - useful for test, this module can be configured to allow a static username and password, 
-                             static username and any passowrd, or static password and any username
+    StaticLoginModule      - useful for test, this module can be configured to allow a static 
+                             username and password, static username and any passowrd, or 
+                             static password and any username
                              
-    StaticRoleLoginModule  - this module performs no authentication, but can be configured to provide a static role 
-                             for authenticated users.  This module is meant to be used in conjunction with 
-                             password-stacking
+    StaticRoleLoginModule  - this module performs no authentication, but can be configured to 
+                             provide a static role for authenticated users.  This module is 
+                             meant to be used in conjunction with password-stacking
 
-    DebugLoginModule       - This module does no authentication or authorization, but will dump information about 
-                             the jaas principle and roles known to the container.  This module is meant to be used in
-                             conjunction with password-stacking
+    DebugLoginModule       - This module does no authentication or authorization, but will 
+                             dump information about the jaas principle and roles known to 
+                             the container.  This module is meant to be used in conjunction 
+                             with password-stacking
 
 
 System Requirements
