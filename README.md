@@ -36,6 +36,9 @@ All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3
 
 The application this project produces is designed to be run on JBoss Enterprise Application Platform 6 or WildFly.
 
+The Radius OTP login-module depends on an updated version of the open source JRadius client.  You can find it here:
+  
+  `https://github.com/detiber/jradius-client`
 
 Configure Maven
 ---------------
@@ -63,22 +66,34 @@ _NOTE: The following build command assumes you have configured your Maven user s
 
     mvn clean install
     
-3. Copy the resulting .jar file from ./target/login-modules-<version>.<version>.jar to the classpath of your EAP instance
+3. Copy the resulting .jar file from `./target/login-modules-<version>.<version>.jar` to the classpath of your EAP instance
 
 Configure your EAP/WildFly instance to use the login-modules
 ------------------------------------------------------------
 
+|Option           |Allowed Values|Description                                   |
+|-----------------|--------------|----------------------------------------------|
+|hostName         |*any string*  |The hostname or ip of the primary radius server|
+|secondaryHostName|*any string*  |The hostname or ip of the secondary radius server|
+|sharedSecret     |*any string*  |The shared secret to use|
+|authRoleName     |*any string*  |The name of the role you want to give authed users|
+|authPort         |*any number*  |The authentication port number to use on the radius server|
+|acctPort         |*any number*  |The accounting port number to use on the radius server|
+|numRetries       |*any number*  |The number of retries allowed |
 
-        <login-module code="org.picketlink.contrib.loginModules.JbossRadiusLoginModule" flag="required">
-            <module-option name="password-stacking" value="useFirstPass"/>
-            <module-option name="hostName" value="192.168.1.42"/>
-            <module-option name="secondaryHostName" value="192.168.1.142"/>
-            <module-option name="sharedSecret" value="mysecret"/>
-            <module-option name="authRoleName" value="authenticated"/>
-            <module-option name="authPort" value="1812"/>
-            <module-option name="acctPort" value="1813"/>
-            <module-option name="numRetries" value="3"/>
-        </login-module>
+###example
+```
+<login-module code="org.picketlink.contrib.loginModules.JbossRadiusLoginModule" flag="required">
+    <module-option name="password-stacking" value="useFirstPass"/>
+    <module-option name="hostName" value="192.168.1.42"/>
+    <module-option name="secondaryHostName" value="192.168.1.142"/>
+    <module-option name="sharedSecret" value="mysecret"/>
+    <module-option name="authRoleName" value="authenticated"/>
+    <module-option name="authPort" value="1812"/>
+    <module-option name="acctPort" value="1813"/>
+    <module-option name="numRetries" value="3"/>
+</login-module>
+```
         
 Static Role
 -----------
@@ -122,8 +137,17 @@ auth.  Combined with the static role module,this can be used to make standalone 
         <module-option name="authUserPassword" value="redhat" />
 </login-module> 
  ```
+Debug Login
+------------
+This module performs no auth or role generation.  It can be added as the last login-module (using password stacking)
+and will dump out a variety of information about the authenticated principal.  It does not take any options.
 
 
-Configure your web-app to use the new Security-Domain
------------------------------------------------------
+###example
+```
+<login-module code="com.redhat.it.jboss.loginModules.DebugLoginModule" flag="required">
+        <module-option name="password-stacking" value="useFirstPass" />
+</login-module> 
+```
+
 
