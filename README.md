@@ -92,13 +92,10 @@ module as you have static roles to assign.
 
 example
 ```
-        <login-module code="com.redhat.it.jboss.loginModules.StaticRoleLoginModule" flag="required">
-        
-            <module-option name="password-stacking" value="useFirstPass"/>
-            
-            <module-option name="authRoleName" value="authenticated"/>
-            
-        </login-module>
+<login-module code="com.redhat.it.jboss.loginModules.StaticRoleLoginModule" flag="required">
+    <module-option name="password-stacking" value="useFirstPass"/>
+    <module-option name="authRoleName" value="authenticated"/>         
+</login-module>
 ```
 
 Static Login
