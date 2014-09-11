@@ -1,4 +1,4 @@
-package com.redhat.it.jboss.utils;
+package org.picketlink.contrib.utils;
 
 /**
  * Created by mcirioli on 12/17/13.

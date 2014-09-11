@@ -1,7 +1,8 @@
 /**
  * 
  */
-package com.redhat.it.jboss.loginModules;
+package org.picketlink.contrib.loginModules;
+
 
 import java.security.acl.Group;
 import java.util.Map;

@@ -40,9 +40,47 @@ The application this project produces is designed to be run on JBoss Enterprise 
 Configure Maven
 ---------------
 
+If you have not yet done so, you must (http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/#configure_maven) before 
+testing the quickstarts.
 
 
 Configure JBoss
 ---------------
 
+1. Open a command line and navigate to the root of the JBoss server directory.
+2. The following shows the command line to start the server with the web profile:
+
+        For Linux:   JBOSS_HOME/bin/standalone.sh
+        For Windows: JBOSS_HOME\bin\standalone.bat
+
+Build and deploy the login-modules
+----------------------------------
+_NOTE: The following build command assumes you have configured your Maven user settings. 
+
+
+1. Open a command line and navigate to the root directory of this repo
+2. Use this command to build the library:
+
+    mvn clean install
+    
+3. Copy the resulting .jar file from ./target/login-modules-<version>.<version>.jar to the classpath of your EAP instance
+
+Configure your EAP/WildFly instance to use the login-modules
+------------------------------------------------------------
+
+
+                        <login-module code="com.redhat.it.jboss.loginModules.JbossRadiusLoginModule" flag="required">
+                            <module-option name="password-stacking" value="useFirstPass"/>
+                            <module-option name="hostName" value="10.7.25.119"/>
+                            <module-option name="secondaryHostName" value="10.7.25.124"/>
+                            <module-option name="sharedSecret" value="redhat"/>
+                            <module-option name="authRoleName" value="authenticated"/>
+                            <module-option name="authPort" value="1812"/>
+                            <module-option name="acctPort" value="1813"/>
+                            <module-option name="numRetries" value="3"/>
+                        </login-module>
+
+
+Configure your web-app to use the new Security-Domain
+-----------------------------------------------------
 

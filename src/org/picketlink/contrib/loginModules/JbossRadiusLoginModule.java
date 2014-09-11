@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.redhat.it.jboss.loginModules;
+package org.picketlink.contrib.loginModules;
 
 import net.sourceforge.jradiusclient.RadiusAttributeValues;
 import net.sourceforge.jradiusclient.RadiusClient;

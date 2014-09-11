@@ -1,4 +1,4 @@
-package com.redhat.it.jboss.utils;
+package org.picketlink.contrib.utils;
 
 import org.apache.catalina.Session;
 import org.jboss.logging.Logger;

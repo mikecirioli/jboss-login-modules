@@ -1,4 +1,4 @@
-package com.redhat.it.jboss.utils;
+package org.picketlink.contrib.utils;
 
 import org.jboss.logging.Logger;
 

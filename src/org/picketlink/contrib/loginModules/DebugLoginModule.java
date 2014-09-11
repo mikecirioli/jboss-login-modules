@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.redhat.it.jboss.loginModules;
+package org.picketlink.contrib.loginModules;
 
 import org.jboss.logging.Logger;
 import org.jboss.security.auth.spi.UsernamePasswordLoginModule;
