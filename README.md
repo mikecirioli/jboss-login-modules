@@ -91,12 +91,15 @@ module as you have static roles to assign.
 |authRoleName |*any string*  |The name of the role you want to give the user|
 
 example
-`
+```
         <login-module code="com.redhat.it.jboss.loginModules.StaticRoleLoginModule" flag="required">
+        
             <module-option name="password-stacking" value="useFirstPass"/>
+            
             <module-option name="authRoleName" value="authenticated"/>
+            
         </login-module>
-`
+```
 
 Static Login
 ------------
