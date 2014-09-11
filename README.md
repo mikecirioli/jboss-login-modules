@@ -38,7 +38,7 @@ The application this project produces is designed to be run on JBoss Enterprise 
 
 The Radius OTP login-module depends on an updated version of the open source JRadius client.  You can find it here:
   
-  `https://github.com/detiber/jradius-client`
+  https://github.com/detiber/jradius-client
 
 Configure Maven
 ---------------
