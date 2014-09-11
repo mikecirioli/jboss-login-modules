@@ -69,16 +69,56 @@ Configure your EAP/WildFly instance to use the login-modules
 ------------------------------------------------------------
 
 
-                        <login-module code="com.redhat.it.jboss.loginModules.JbossRadiusLoginModule" flag="required">
-                            <module-option name="password-stacking" value="useFirstPass"/>
-                            <module-option name="hostName" value="10.7.25.119"/>
-                            <module-option name="secondaryHostName" value="10.7.25.124"/>
-                            <module-option name="sharedSecret" value="redhat"/>
-                            <module-option name="authRoleName" value="authenticated"/>
-                            <module-option name="authPort" value="1812"/>
-                            <module-option name="acctPort" value="1813"/>
-                            <module-option name="numRetries" value="3"/>
-                        </login-module>
+        <login-module code="org.picketlink.contrib.loginModules.JbossRadiusLoginModule" flag="required">
+            <module-option name="password-stacking" value="useFirstPass"/>
+            <module-option name="hostName" value="192.168.1.42"/>
+            <module-option name="secondaryHostName" value="192.168.1.142"/>
+            <module-option name="sharedSecret" value="mysecret"/>
+            <module-option name="authRoleName" value="authenticated"/>
+            <module-option name="authPort" value="1812"/>
+            <module-option name="acctPort" value="1813"/>
+            <module-option name="numRetries" value="3"/>
+        </login-module>
+        
+Static Role
+-----------
+This module does not perform any auth, it only provides a statically defined java role for the user.  It is meant to be 
+used in conjunction with another login-module that performs authentication.  You can define as many instances of this 
+module as you have static roles to assign.        
+
+|Option       |Allowed Values|Description                                   |
+|-------------|--------------|----------------------------------------------|
+|authRoleName |*any string*  |The name of the role you want to give the user|
+
+ex.
+        <login-module code="com.redhat.it.jboss.loginModules.StaticRoleLoginModule" flag="required">
+            <module-option name="password-stacking" value="useFirstPass"/>
+            <module-option name="authRoleName" value="authenticated"/>
+        </login-module>
+
+Static Login
+------------
+This module lets you configure a static username and password and then perform FORM based auth based on the values.  
+You can specify it to allow any username with a hard-coded password, or allow any user and any password to successfully 
+auth.  Combined with the static role module,this can be used to make standalone testing/development easier.
+
+ex.
+        <login-module code="com.redhat.it.jboss.loginModules.StaticLoginModule" flag="required">
+              <!-- if you plan to use this in conjunction with the static Role modules, you need to enable password stacking -->
+                <module-option name="password-stacking" value="useFirstPass" />
+                <module-option name="authAnyUser" value="true" />
+                <module-option name="authAnyPass" value="false" />
+                <module-option name="authUserName" value="testuser" />
+                <module-option name="authUserPassword" value="redhat" />
+        </login-module> 
+ 
+Parameter Name	Parameter Value	Notes
+code	com.redhat.it.jboss.loginModules.StaticLoginModule	The name of the class that provides this login module
+authAnyUser
+true || false	if true, will accept any username as valid
+authAnyPass	true || false	if true, will accept any password as valid
+authUserName	<string>	if authAnyUser == false, then only the string specified here will be considered a valid username.  This option is ignored if authAnyUser == true
+authUserPassword	<string>	if authAnyPass == false, then only the string specified here will be considered a valid password.  This option is ignored if authAnyPass == true
 
 
 Configure your web-app to use the new Security-Domain
