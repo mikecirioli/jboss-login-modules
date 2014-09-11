@@ -90,7 +90,7 @@ module as you have static roles to assign.
 |-------------|--------------|----------------------------------------------|
 |authRoleName |*any string*  |The name of the role you want to give the user|
 
-example
+###example
 ```
 <login-module code="com.redhat.it.jboss.loginModules.StaticRoleLoginModule" flag="required">
     <module-option name="password-stacking" value="useFirstPass"/>
@@ -104,23 +104,24 @@ This module lets you configure a static username and password and then perform F
 You can specify it to allow any username with a hard-coded password, or allow any user and any password to successfully 
 auth.  Combined with the static role module,this can be used to make standalone testing/development easier.
 
-ex.
-        <login-module code="com.redhat.it.jboss.loginModules.StaticLoginModule" flag="required">
-              <!-- if you plan to use this in conjunction with the static Role modules, you need to enable password stacking -->
-                <module-option name="password-stacking" value="useFirstPass" />
-                <module-option name="authAnyUser" value="true" />
-                <module-option name="authAnyPass" value="false" />
-                <module-option name="authUserName" value="testuser" />
-                <module-option name="authUserPassword" value="redhat" />
-        </login-module> 
- 
-Parameter Name	Parameter Value	Notes
-code	com.redhat.it.jboss.loginModules.StaticLoginModule	The name of the class that provides this login module
-authAnyUser
-true || false	if true, will accept any username as valid
-authAnyPass	true || false	if true, will accept any password as valid
-authUserName	<string>	if authAnyUser == false, then only the string specified here will be considered a valid username.  This option is ignored if authAnyUser == true
-authUserPassword	<string>	if authAnyPass == false, then only the string specified here will be considered a valid password.  This option is ignored if authAnyPass == true
+|Option           |Allowed Values |Description                               |
+|-----------------|---------------|------------------------------------------|
+|authAnyUser      |true, false    |if true, will accept any username as valid|
+|authAnyPass      |true, false    |if true, will accept any password as valid|
+|authUserName     |true, false    |if authAnyUser == false, then only the string specified here will be considered a valid username.  This option is ignored if authAnyUser == true|
+|authUserPassword |true, false    |if authAnyPass == false, then only the string specified here will be considered a valid password.  This option is ignored if authAnyPass == true|
+
+
+###example
+```
+<login-module code="com.redhat.it.jboss.loginModules.StaticLoginModule" flag="required">
+        <module-option name="password-stacking" value="useFirstPass" />
+        <module-option name="authAnyUser" value="true" />
+        <module-option name="authAnyPass" value="false" />
+        <module-option name="authUserName" value="testuser" />
+        <module-option name="authUserPassword" value="redhat" />
+</login-module> 
+ ```
 
 
 Configure your web-app to use the new Security-Domain
