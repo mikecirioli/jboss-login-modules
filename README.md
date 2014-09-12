@@ -60,26 +60,41 @@ Build and deploy the login-modules
 ----------------------------------
 _NOTE: The following build command assumes you have configured your Maven user settings. 
 
-
-1. Open a command line and navigate to the root directory of this repo
-2. Use this command to build the library:
+1. Build and install the JRadius client library (https://github.com/detiber/jradius-client)
+2. Open a command line and navigate to the root directory of this repo
+3. Use this command to build the library:
 
     mvn clean install
     
-3. Copy the resulting .jar file from `./target/login-modules-<version>.<version>.jar` to the classpath of your EAP instance
+4. Copy the resulting .jar file from `./target/login-modules-<version>.<version>.jar` to the classpath of your EAP instance
 
 Configure your EAP/WildFly instance to use the login-modules
 ------------------------------------------------------------
+All of the login modules are implemented as standard JBoss login-modules, and can be used in conjunction with 
+other modules through the use of the password-stacking option.
 
-|Option           |Allowed Values|Description                                   |
-|-----------------|--------------|----------------------------------------------|
-|hostName         |*any string*  |The hostname or ip of the primary radius server|
-|secondaryHostName|*any string*  |The hostname or ip of the secondary radius server|
-|sharedSecret     |*any string*  |The shared secret to use|
-|authRoleName     |*any string*  |The name of the role you want to give authed users|
-|authPort         |*any number*  |The authentication port number to use on the radius server|
-|acctPort         |*any number*  |The accounting port number to use on the radius server|
-|numRetries       |*any number*  |The number of retries allowed |
+Radius OTP Login
+----------------
+This module can be used to perform Radius OTP authentication when configured against an exist Radius server.  This module
+is dependent on the open source jradius-client library, which can be found at https://github.com/detiber/jradius-client
+
+There is an issue with JBoss session replication that prevents SSO from working properly in a clustered environment when
+one or more nodes become unavailable.  Although HTTP sessions are properly replicated, the SSO cache is not, and JBoss 
+will try to replay the users credentials upon accessing a new node.  Since OTP is by nature a one-shot authentication, 
+this replay will fail and the user will be requested to re-authenticate.  By setting the module option **"fixSessionReplication"** 
+to **true**, the login module will recognize this condition and properly intialize the replicated user on the new node.
+
+
+|Option               |Allowed Values   |Description                                   |
+|---------------------|-----------------|----------------------------------------------|
+|hostName             |*any string*     |The hostname or ip of the primary radius server|
+|secondaryHostName    |*any string*     |The hostname or ip of the secondary radius server|
+|sharedSecret         |*any string*     |The shared secret to use|
+|authRoleName         |*any string*     |The name of the role you want to give authed users|
+|authPort             |*any number*     |The authentication port number to use on the radius server|
+|acctPort             |*any number*     |The accounting port number to use on the radius server|
+|numRetries           |*any number*     |The number of retries allowed |
+|fixSessionReplication|*true* or *false*|enable or disable session replication fix for sso, defaults to *false*|
 
 ###example
 ```

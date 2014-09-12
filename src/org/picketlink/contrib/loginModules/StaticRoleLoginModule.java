@@ -17,13 +17,12 @@ import org.jboss.security.auth.spi.UsernamePasswordLoginModule;
 
 
 /**
- * @author jdetiber
- * @author vkumar
- * @author mcirioli
+ * @author mike cirioli  mikecirioli@gmail.com
  *
- * Jboss loginModules authenticator that validates username/password against redhat User Service via REST
+ * Jboss loginModules authenticator that does not perform authn, but will provide a statically mapped role
+ * configured via module options
  * 4.22.2013
- * 
+ *
  */
 
 public class StaticRoleLoginModule extends UsernamePasswordLoginModule {

@@ -17,41 +17,39 @@ import java.util.Set;
 
 
 /**
- * @author jdetiber
- * @author vkumar
- * @author mcirioli
+ *  @author mike cirioli mikecirioli@gmail.com
  *
- * Jboss loginModules authenticator that validates username/password against redhat User Service via REST
+ * Jboss loginModules authenticator that only outputs debug info (does not do authn or provide roles)
  * 4.22.2013
- * 
+ *
  */
 
 public class DebugLoginModule extends UsernamePasswordLoginModule {
-	public static final String AUTH_ROLE_NAME = "authRoleName";
+
     private Logger logger = Logger.getLogger(DebugLoginModule.class);
 	private static final String[] ALL_VALID_OPTIONS = {};
 
 	@Override
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String,?> sharedState, Map<String,?> options) {
-    	logger.info("DebugLoginModule initialize!");
+    	logger.debug("DebugLoginModule initialize!");
 		addValidOptions(ALL_VALID_OPTIONS);
 
-        logger.info("dumping shareState");
+        logger.debug("dumping shareState");
         Set keys = sharedState.keySet();
         for (Iterator i = keys.iterator();i.hasNext();) {
             String key = (String) i.next();
             Object value = (Object) sharedState.get(key);
-            logger.info("key: [" + key + "]   value: [" + value.toString() + "]");
+            logger.debug("key: [" + key + "]   value: [" + value.toString() + "]");
         }
-        logger.info("done dumping sharedState");
+        logger.debug("done dumping sharedState");
 
-        logger.info("getting subject prinicpals");
+        logger.debug("getting subject prinicpals");
         Set principals = subject.getPrincipals();
         for (Iterator i = principals.iterator();i.hasNext();) {
             Principal p = (Principal) i.next();
-            logger.info("principal.getName(): [" + p.getName()+ "]");
+            logger.debug("principal.getName(): [" + p.getName()+ "]");
         }
-        logger.info("done dumping subject prinicpals");
+        logger.debug("done dumping subject prinicpals");
 
         super.initialize(subject, callbackHandler, sharedState, options);
 
@@ -64,18 +62,6 @@ public class DebugLoginModule extends UsernamePasswordLoginModule {
 	@Override
 	protected Group[] getRoleSets() throws LoginException {
         logger.debug("debugLoginModule.getRoleSets()");
-//		String roleName = (String)options.get(AUTH_ROLE_NAME);
-//
-//		SimpleGroup userRoles = new SimpleGroup("Roles");
-//        Principal p = null;
-//		try {
-//            p = super.createIdentity(roleName);
-//			logger.debug("Assign principal [" + p.getName() + "] to role [" + roleName + "]");
-//			userRoles.addMember(p);
-//		} catch (Exception e) {
-//			logger.info("Failed to assign principal [" + p.getName() + "] to role [" + roleName + "]", e);
-//		}
-
 		Group[] roleSets = {};
 		return roleSets;
 	}
@@ -87,7 +73,7 @@ public class DebugLoginModule extends UsernamePasswordLoginModule {
 	 */
 	@Override
 	protected String getUsersPassword() throws LoginException {
-	    logger.info("getUsersPassword() [returning empty string always]");
+	    logger.debug("getUsersPassword() [returning empty string always]");
 		return "";
 	}
 
@@ -101,7 +87,7 @@ public class DebugLoginModule extends UsernamePasswordLoginModule {
 	 
 	@Override
 	protected boolean validatePassword(String inputPassword, String expectedPassword){
-        logger.info("validatePassword() [returning false always]");
+        logger.debug("validatePassword() [returning false always]");
         return false;
     }
 }
