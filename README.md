@@ -4,7 +4,7 @@ Author: Michael Cirioli
 Level: Beginner
 Technologies:  JBoss EAP/WildFly, PicketLink
 Summary: Additional JBoss login-modules providing Radius OTP authentication, static logins, static roles, debugging info
-Source: <https://github.com/mikecirioli/jboss-login-modules>
+
 
 What is it?
 -----------
@@ -36,9 +36,9 @@ All you need to build this project is Java 6.0 (Java SDK 1.6) or better, Maven 3
 
 The application this project produces is designed to be run on JBoss Enterprise Application Platform 6 or WildFly.
 
-The Radius OTP login-module depends on an updated version of the open source JRadius client.  You can find it here:
+The Radius OTP login-module depends on the open source JRadius client.  You can find it here:
   
-  https://github.com/detiber/jradius-client
+	https://github.com/bloihl/jradius-client
 
 Configure Maven
 ---------------
@@ -76,7 +76,7 @@ other modules through the use of the password-stacking option.
 Radius OTP Login
 ----------------
 This module can be used to perform Radius OTP authentication when configured against an exist Radius server.  This module
-is dependent on the open source jradius-client library, which can be found at https://github.com/detiber/jradius-client
+is dependent on the open source jradius-client library, which can be found at https://github.com/bloihl/jradius-client
 
 There is an issue with JBoss session replication that prevents SSO from working properly in a clustered environment when
 one or more nodes become unavailable.  Although HTTP sessions are properly replicated, the SSO cache is not, and JBoss 
